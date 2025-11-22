@@ -25,7 +25,10 @@ export function tokensToMaterialUI(tokens: ThemeTokens): string {
   lines.push('  },');
   lines.push('  typography: {');
   lines.push('    fontFamily: [');
-  const fontFamilies = tokens.typography.fontFamily.sans.split(',').map(f => `'${f.trim()}'`);
+  const fontFamilies = tokens.typography.fontFamily.sans.split(',').map(f => {
+    const trimmed = f.trim();
+    return `'${trimmed.replace(/'/g, "\\'")}'`;
+  });
   lines.push(`      ${fontFamilies.join(', ')},`);
   lines.push('      "Arial", "sans-serif"');
   lines.push('    ].join(","),');
@@ -47,12 +50,14 @@ export function tokensToMaterialUI(tokens: ThemeTokens): string {
   lines.push('    },');
   lines.push('  },');
   lines.push('  shape: {');
-  lines.push(`    borderRadius: ${parseFloat(tokens.radius.md)} * 4,`);
+  const borderRadius = parseFloat(tokens.radius.md);
+  if (!isNaN(borderRadius)) {
+    lines.push(`    borderRadius: ${borderRadius * 4},`);
+  } else {
+    lines.push('    borderRadius: 4,');
+  }
   lines.push('  },');
-  lines.push('  spacing: (factor: number) => {');
-  lines.push(`    const baseUnit = ${parseFloat(tokens.spacing.md)};`);
-  lines.push('    return `${baseUnit * factor}px`;');
-  lines.push('  },');
+  lines.push('  spacing: 8,');
   lines.push('});');
   lines.push('');
   lines.push('export default theme;');

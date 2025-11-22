@@ -36,7 +36,8 @@ export function tokensToJss(tokens: ThemeTokens): string {
   lines.push('    fontFamily: {');
 
   Object.entries(tokens.typography.fontFamily).forEach(([key, value]) => {
-    lines.push(`      ${key}: '${value}',`);
+    const escaped = value.replace(/'/g, "\\'");
+    lines.push(`      ${key}: '${escaped}',`);
   });
 
   lines.push('    },');

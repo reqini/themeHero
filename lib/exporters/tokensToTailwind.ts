@@ -37,7 +37,11 @@ export function tokensToTailwind(tokens: ThemeTokens): string {
   lines.push("      fontFamily: {");
 
   Object.entries(tokens.typography.fontFamily).forEach(([key, value]) => {
-    lines.push(`        '${key}': [${value.split(',').map(f => `'${f.trim()}'`).join(', ')}],`);
+    const fontArray = value.split(',').map(f => {
+      const trimmed = f.trim();
+      return `'${trimmed.replace(/'/g, "\\'")}'`;
+    });
+    lines.push(`        '${key}': [${fontArray.join(', ')}],`);
   });
 
   lines.push("      },");

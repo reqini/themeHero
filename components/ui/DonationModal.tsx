@@ -9,11 +9,17 @@ interface DonationModalProps {
 }
 
 export function DonationModal({ isOpen, onClose }: DonationModalProps) {
-  const mpAlias = 'lucianorecchini';
-  const donationUrl = `https://mpago.la/${mpAlias}`;
+  const donationUrl =
+    process.env.NEXT_PUBLIC_MERCADO_PAGO_DONATION_URL ||
+    'https://www.mercadopago.com.ar/ayuda/donaciones';
 
   const handleDonate = () => {
-    window.open(donationUrl, '_blank');
+    if (!donationUrl.startsWith('http')) {
+      console.error('Invalid Mercado Pago URL configuration');
+      alert('Error al procesar el link de colaboración. Intentá nuevamente.');
+      return;
+    }
+    window.open(donationUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -42,18 +48,27 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
             >
               <h2 className="text-2xl font-bold mb-4">Aporta para que ThemeHero siga creciendo</h2>
               
-              <p className="text-muted-foreground mb-6">
-                ThemeHero es una herramienta 100% gratuita y sin restricciones. Tu colaboración es opcional y ayuda a mantener la herramienta libre y disponible para todos.
-              </p>
+              <div className="space-y-4 mb-6">
+                <p className="text-foreground font-semibold">
+                  Esta herramienta es 100% gratuita para siempre 🚀
+                </p>
+                <p className="text-muted-foreground">
+                  Si querés colaborar para que siga creciendo, ¡gracias!
+                </p>
+                <p className="text-muted-foreground">
+                  Tu aporte es opcional 💙
+                </p>
+              </div>
 
               <div className="flex flex-col gap-3">
-                <Button
-                  variant="primary"
+                <motion.button
                   onClick={handleDonate}
-                  className="w-full"
+                  className="px-5 py-3 rounded-lg bg-primary text-white font-semibold hover:opacity-80 transition-all w-full"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   💙 Colaborar vía Mercado Pago
-                </Button>
+                </motion.button>
                 <Button
                   variant="ghost"
                   onClick={onClose}

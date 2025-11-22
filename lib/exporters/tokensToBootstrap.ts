@@ -6,18 +6,23 @@ export function tokensToBootstrap(tokens: ThemeTokens): string {
   cssVars.push(':root {');
   cssVars.push('  /* Bootstrap Theme Override */');
 
+  if (tokens.colors.primary) {
+    cssVars.push(`  --bs-primary: ${tokens.colors.primary};`);
+    cssVars.push(`  --bs-primary-rgb: ${hexToRgb(tokens.colors.primary)};`);
+  }
+  if (tokens.colors.secondary) {
+    cssVars.push(`  --bs-secondary: ${tokens.colors.secondary};`);
+    cssVars.push(`  --bs-secondary-rgb: ${hexToRgb(tokens.colors.secondary)};`);
+  }
+  if (tokens.colors.accent) {
+    cssVars.push(`  --bs-info: ${tokens.colors.accent};`);
+    cssVars.push(`  --bs-info-rgb: ${hexToRgb(tokens.colors.accent)};`);
+  }
+  
   Object.entries(tokens.colors).forEach(([key, value]) => {
-    if (key === 'primary') {
-      cssVars.push(`  --bs-primary: ${value};`);
-      cssVars.push(`  --bs-primary-rgb: ${hexToRgb(value)};`);
-    } else if (key === 'secondary') {
-      cssVars.push(`  --bs-secondary: ${value};`);
-      cssVars.push(`  --bs-secondary-rgb: ${hexToRgb(value)};`);
-    } else if (key === 'accent') {
-      cssVars.push(`  --bs-info: ${value};`);
-      cssVars.push(`  --bs-info-rgb: ${hexToRgb(value)};`);
+    if (key !== 'primary' && key !== 'secondary' && key !== 'accent') {
+      cssVars.push(`  --bs-${key}: ${value};`);
     }
-    cssVars.push(`  --bs-${key}: ${value};`);
   });
 
   cssVars.push('');

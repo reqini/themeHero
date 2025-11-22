@@ -18,12 +18,13 @@ export function tokensToGoogleFonts(tokens: ThemeTokens): string {
     lines.push('/* Google Fonts Import */');
     lines.push(`@import url('https://fonts.googleapis.com/css2?family=${fontNames[0]}:wght@400;500;600;700&display=swap');`);
     lines.push('');
+    const fontNameForImport = fontNames[0].replace(/\+/g, '');
     lines.push('/* Next.js Font Object */');
-    lines.push("import { Inter } from 'next/font/google';");
+    lines.push(`import { ${fontNameForImport} } from 'next/font/google';`);
     lines.push('');
-    lines.push('const inter = Inter({');
+    lines.push(`const ${fontNameForImport.toLowerCase()} = ${fontNameForImport}({`);
     lines.push("  subsets: ['latin'],");
-    lines.push("  variable: '--font-inter',");
+    lines.push(`  variable: '--font-${fontNameForImport.toLowerCase()}',`);
     lines.push('});');
     lines.push('');
     lines.push('/* Usage in tailwind.config.js */');

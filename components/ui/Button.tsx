@@ -6,9 +6,11 @@ import { ReactNode } from 'react';
 interface ButtonProps {
   children: ReactNode;
   variant?: 'primary' | 'ghost';
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  title?: string;
 }
 
 export function Button({
@@ -17,6 +19,8 @@ export function Button({
   onClick,
   className = '',
   type = 'button',
+  disabled = false,
+  title,
 }: ButtonProps) {
   const baseClasses =
     'px-6 py-3 rounded-lg font-medium transition-all duration-normal cursor-pointer border';
@@ -32,9 +36,11 @@ export function Button({
     <motion.button
       type={type}
       onClick={onClick}
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      disabled={disabled}
+      title={title}
+      className={`${baseClasses} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+      whileHover={disabled ? {} : { scale: 1.02 }}
+      whileTap={disabled ? {} : { scale: 0.98 }}
       transition={{ duration: 0.2 }}
     >
       {children}

@@ -72,8 +72,7 @@ export function Hero() {
             <Button
               variant="ghost"
               className="text-lg px-8 py-4"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 const demoSection = document.getElementById('demo-section');
                 if (demoSection) {
                   demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });

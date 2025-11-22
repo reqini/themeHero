@@ -17,7 +17,11 @@ export function tokensToReactNative(tokens: ThemeTokens): string {
 
   Object.entries(tokens.spacing).forEach(([key, value]) => {
     const numValue = parseFloat(value);
-    lines.push(`    ${key}: ${numValue},`);
+    if (!isNaN(numValue)) {
+      lines.push(`    ${key}: ${numValue},`);
+    } else {
+      lines.push(`    ${key}: 0,`);
+    }
   });
 
   lines.push('  },');
@@ -25,7 +29,11 @@ export function tokensToReactNative(tokens: ThemeTokens): string {
 
   Object.entries(tokens.radius).forEach(([key, value]) => {
     const numValue = parseFloat(value);
-    lines.push(`    ${key}: ${numValue},`);
+    if (!isNaN(numValue)) {
+      lines.push(`    ${key}: ${numValue},`);
+    } else {
+      lines.push(`    ${key}: 0,`);
+    }
   });
 
   lines.push('  },');
@@ -42,7 +50,11 @@ export function tokensToReactNative(tokens: ThemeTokens): string {
 
   Object.entries(tokens.typography.fontSize).forEach(([key, value]) => {
     const numValue = parseFloat(value);
-    lines.push(`      ${key}: ${numValue},`);
+    if (!isNaN(numValue)) {
+      lines.push(`      ${key}: ${numValue},`);
+    } else {
+      lines.push(`      ${key}: 14,`);
+    }
   });
 
   lines.push('    },');

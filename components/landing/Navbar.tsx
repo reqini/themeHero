@@ -31,13 +31,14 @@ ThemeHero
             <Link href="/builder">
               <Button variant="primary">Launch Theme Builder</Button>
             </Link>
-            <Button
-              variant="ghost"
+            <motion.button
               onClick={() => setShowDonationModal(true)}
-              className="text-sm"
+              className="px-4 py-2 rounded-lg bg-primary/10 text-primary font-medium hover:bg-primary/20 transition-all text-sm border border-primary/20"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               💙 Colaborar
-            </Button>
+            </motion.button>
           </div>
         </div>
       </motion.nav>

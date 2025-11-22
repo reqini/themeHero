@@ -16,9 +16,9 @@ export function tokensToChakraUI(tokens: ThemeTokens): string {
   lines.push('    },');
   lines.push('  },');
   lines.push('  fonts: {');
-  lines.push('    body: ' + JSON.stringify(tokens.typography.fontFamily.sans) + ',');
-  lines.push('    heading: ' + JSON.stringify(tokens.typography.fontFamily.sans) + ',');
-  lines.push('    mono: ' + JSON.stringify(tokens.typography.fontFamily.mono) + ',');
+  lines.push(`    body: ${JSON.stringify(tokens.typography.fontFamily.sans)},`);
+  lines.push(`    heading: ${JSON.stringify(tokens.typography.fontFamily.sans)},`);
+  lines.push(`    mono: ${JSON.stringify(tokens.typography.fontFamily.mono)},`);
   lines.push('  },');
   lines.push('  fontSizes: {');
 
