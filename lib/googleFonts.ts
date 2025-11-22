@@ -31,16 +31,24 @@ export function loadGoogleFont(fontName: string, weights: number[]): void {
   if (typeof window === 'undefined') return;
   
   const fontId = `google-font-${fontName.toLowerCase().replace(/\s+/g, '-')}`;
-  const existingLink = document.getElementById(fontId);
+  let existingLink = document.getElementById(fontId) as HTMLLinkElement;
   
   if (existingLink) {
-    return;
+    // Update existing link if font changed
+    existingLink.href = getGoogleFontsUrl(fontName, weights);
+  } else {
+    const link = document.createElement('link');
+    link.id = fontId;
+    link.rel = 'stylesheet';
+    link.href = getGoogleFontsUrl(fontName, weights);
+    document.head.appendChild(link);
   }
   
-  const link = document.createElement('link');
-  link.id = fontId;
-  link.rel = 'stylesheet';
-  link.href = getGoogleFontsUrl(fontName, weights);
-  document.head.appendChild(link);
+  // Update CSS variable immediately for real-time sync
+  const root = document.documentElement;
+  root.style.setProperty('--font-family-sans', `"${fontName}", system-ui, sans-serif`);
+  
+  // Also update body font-family for immediate effect
+  document.body.style.fontFamily = `"${fontName}", system-ui, sans-serif`;
 }
 
